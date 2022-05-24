@@ -5,6 +5,7 @@ let totalIteration;
 let inicio;
 let totalBill = 0;
 let factura = false;
+let tableContent = '';
 const productos = new Array();
 /*
 Funciones
@@ -27,6 +28,11 @@ function validateFcType(tipo){
     }else{
         return false;
     }
+}
+function ucfirst(cadena){
+    let primera = cadena.charAt(0).toUpperCase();
+    cadena = cadena.slice(1);
+    return primera + cadena;
 }
 
 do{
@@ -52,9 +58,22 @@ for(let i = 1; i <= parseInt(totalIteration); i++){
 };
 
 // calculo final
+console.log(productos);
 productos.forEach(item => {
     totalBill += item.cantidad * item.precio;
+    tableContent += `
+    <tr>
+        <td>${ucfirst(item.nombre)}</td>
+        <td>${item.cantidad}</td>
+        <td>$${item.precio * item.cantidad}</td>
+    </tr>
+    `;
 });
+
+// agrego filas a la tabla
+if(tableContent != undefined){
+    document.getElementById("tbody-container").innerHTML = tableContent;
+}
 
 do{
     factura = prompt('Tipo de factura: ingrese A o B');      
@@ -62,9 +81,25 @@ do{
 
 let ivaDisc = (totalBill * 21)/100;
 if(factura == 'b'){
-    console.log(`El total es: ${totalBill + ivaDisc}`);
+    let footer = document.querySelector("#tfoot-container");
+    footer.innerHTML = `
+    <tr>
+        <td>El total es:</td>
+        <td colspan="2">$${parseFloat(totalBill + ivaDisc)}</td>
+    </tr>    
+    `;
 }else{
-    console.log(`Subtotal: ${totalBill}`);
-    console.log(`IVA: ${ivaDisc}`);
-    console.log(`El total es: ${totalBill + ivaDisc}`);
+    let footer = document.querySelector("#tfoot-container");
+    footer.innerHTML = `
+    <tr>
+        <td>Subtotal: $${totalBill}</td>
+        <td>IVA: $${ivaDisc}</td>
+        <td>El total es: $${totalBill + ivaDisc}</td>
+    </tr>    
+    `;
 }
+
+// Adapto la vista.
+document.querySelector(".vista-previa").classList.add("d-none");
+document.getElementById("table-container").classList.remove('d-none');
+document.querySelector(".cart-title").classList.remove('d-none');

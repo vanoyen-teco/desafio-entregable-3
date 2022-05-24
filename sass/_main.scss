@@ -1,0 +1,25 @@
+body{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+}
+.bold{
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+.header{
+    background-color: $bgMainColor;
+    height: 60px;
+}
+
+#js-container{
+    min-height: 100vh;
+    .cart-title{
+        background-color: $bgMainColor;
+        font-size: 1.2rem;
+        padding: .5em .75em;
+    }
+    tfoot{
+        font-weight: 700;
+        letter-spacing: 0.03em;
+    }
+}
