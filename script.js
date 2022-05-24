@@ -85,7 +85,7 @@ if(factura == 'b'){
     footer.innerHTML = `
     <tr>
         <td>El total es:</td>
-        <td colspan="2">$${parseFloat(totalBill + ivaDisc)}</td>
+        <td colspan="2">$${totalBill + ivaDisc}</td>
     </tr>    
     `;
 }else{
