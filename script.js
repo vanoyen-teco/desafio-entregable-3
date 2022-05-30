@@ -8,7 +8,7 @@ let factura = false;
 let tableContent = '';
 let inputContent;
 let producto;
-const button = document.getElementById("btnEnviar");
+const buttonEnviar = document.getElementById("btnEnviar");
 const productos = new Array();
 /*
 Funciones
@@ -18,7 +18,7 @@ function setCantidad(){
     totalIteration = parseInt(returnInput());
     if(validateNumber(totalIteration) && totalIteration > 0){
         setProductos();
-        button.onclick =  productosPasos;
+        buttonEnviar.onclick =  productosPasos;
     }else{
         inputError(false);
     }
@@ -78,10 +78,9 @@ function eventProductoPrecio(){
     if(validateNumber(number)){
         productos.push({nombre: `${producto}`, cantidad: 1, precio: number});
         inicio++;
-        button.onclick = productosPasos;
+        buttonEnviar.onclick = productosPasos;
         setProductos();
     }else{
-        console.log('no valido');
         if(number != ''){
             inputError(false);
         }
@@ -96,7 +95,7 @@ function eventProducto(){
             // primer ingreso del item, solicito el precio.
             document.getElementById("campoDatos").value = '';
             changeInnerHtml("formLabelDatos", `Ingrese precio del producto ${inicio}`);
-            button.onclick = eventProductoPrecio;
+            buttonEnviar.onclick = eventProductoPrecio;
         }else{
             // sumo uno ya que el item se encuentra en el "carro";
             productos[itemIndex].cantidad = productos[itemIndex].cantidad + 1;
@@ -126,7 +125,7 @@ function finalProductos(){
         changeInnerHtml("tbody-container", tableContent);
     }
     changeInnerHtml("formLabelDatos", 'Tipo de factura: ingrese A o B');
-    button.onclick = validateFcType;
+    buttonEnviar.onclick = validateFcType;
 }
 
 function printFactura(){
@@ -150,6 +149,9 @@ function printFactura(){
         `;
     }
 
+    // guardo la factura (temporalmente en local storage)
+    almacenarFactura(totalBill, tableContent);
+
     // Adapto la vista.
     document.querySelector(".vista-previa").classList.add("d-none");
     let ocultar = document.querySelectorAll(".cart-title, .final, #table-container");
@@ -158,15 +160,40 @@ function printFactura(){
     });
 }
 
+function almacenarFactura(total, tabla){
+    let datosFactura = {total: total, tabla: tabla};
+    localStorage.setItem('datosFactura', JSON.stringify(datosFactura));
+}
+
+function reimprimirFactura(datos){
+    totalBill = datos.total;
+    tableContent = datos.tabla;
+    changeInnerHtml("tbody-container", tableContent);
+    printFactura();
+}
+
+function verificarStorageFactura(){
+    if(localStorage.getItem('datosFactura')){
+        let datos = JSON.parse(localStorage.getItem('datosFactura'));
+        let myOffcanvasReimpresion = document.getElementById('offcanvasCarrito');
+        let bsOffcanvasReimpresion = new bootstrap.Offcanvas(myOffcanvasReimpresion);
+
+        bsOffcanvasReimpresion.show();
+        document.getElementById('btnReimprimirFc').onclick = () => { reimprimirFactura(datos); bsOffcanvasReimpresion.hide() };
+        document.getElementById('btnNoReimprimirFc').onclick = () => { bsOffcanvasReimpresion.hide() };
+    }
+}
+
 /*Listeners*/
 document.getElementById("form-datos").addEventListener('submit', (e) => {
     e.preventDefault();
 });
 document.getElementById("campoDatos").addEventListener("keyup", ({key}) => {
     if (key === "Enter") {
-        button.click();
+        buttonEnviar.click();
     }
 })
 /*Start app*/
-button.onclick = setCantidad;
+buttonEnviar.onclick = setCantidad;
 document.getElementById('btnRestart').onclick = () => {location.reload()};
+verificarStorageFactura();
