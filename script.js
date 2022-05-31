@@ -142,9 +142,9 @@ function printFactura(){
         let footer = document.querySelector("#tfoot-container");
         footer.innerHTML = `
         <tr>
-            <td>Subtotal: $${totalBill}</td>
-            <td>IVA: $${ivaDisc}</td>
-            <td>El total es: $${totalBill + ivaDisc}</td>
+            <td>Subtotal: $${(totalBill).toFixed(2)}</td>
+            <td>IVA: $${(ivaDisc).toFixed(2)}</td>
+            <td>El total es: $${(totalBill + ivaDisc).toFixed(2)}</td>
         </tr>    
         `;
     }
