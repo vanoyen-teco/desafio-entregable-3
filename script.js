@@ -9,6 +9,7 @@ let tableContent = '';
 let inputContent;
 let producto;
 const buttonEnviar = document.getElementById("btnEnviar");
+const campoDatos = document.getElementById("campoDatos");
 const productos = new Array();
 /*
 Funciones
@@ -31,7 +32,7 @@ function validateNumber(number){
     }
 }
 function validateFcType(){
-    tipo = document.getElementById("campoDatos").value;
+    tipo = campoDatos.value;
     tipo = tipo.toLowerCase().trim();
     if(tipo == "a" || tipo == "b"){
         printFactura();
@@ -47,25 +48,21 @@ function ucfirst(cadena){
     return primera + cadena;
 }
 function returnInput(){
-    inputContent = document.getElementById("campoDatos").value;
+    inputContent = campoDatos.value;
     return inputContent;
 }
 function changeInnerHtml(id, datos){
     document.getElementById(`${id}`).innerHTML = datos;   
 }
 function inputError(estado){
-    if(estado){
-        document.getElementById('campoDatos').classList.remove("is-invalid");
-    }else{
-        document.getElementById('campoDatos').classList.add("is-invalid");
-    }
+    (estado) ? campoDatos.classList.remove("is-invalid") : campoDatos.classList.add("is-invalid");
 }
 function productosPasos(){
     eventProducto();
 }
 function setProductos(){
     inputError(true);
-    document.getElementById("campoDatos").value = '';
+    campoDatos.value = '';
     if(inicio <= totalIteration){
         changeInnerHtml("formLabelDatos", `Ingrese nombre del producto Nº ${inicio}`);
         eventProducto();
@@ -93,7 +90,7 @@ function eventProducto(){
         let itemIndex = productos.findIndex( item => item.nombre === producto);
         if(itemIndex == -1){
             // primer ingreso del item, solicito el precio.
-            document.getElementById("campoDatos").value = '';
+            campoDatos.value = '';
             changeInnerHtml("formLabelDatos", `Ingrese precio del producto ${inicio}`);
             buttonEnviar.onclick = eventProductoPrecio;
         }else{
@@ -188,7 +185,7 @@ function verificarStorageFactura(){
 document.getElementById("form-datos").addEventListener('submit', (e) => {
     e.preventDefault();
 });
-document.getElementById("campoDatos").addEventListener("keyup", ({key}) => {
+campoDatos.addEventListener("keyup", ({key}) => {
     if (key === "Enter") {
         buttonEnviar.click();
     }
