@@ -1,4 +1,4 @@
-# Pre Entrega Nº 2 Javascript
+# Desafío Complementario Nº 4 Javascript
 ## Alumno: Juan Manuel Rodriguez Van Oyen
 
 Evolución del repositorio de Pre entrega Nº 1 (https://github.com/vanoyen-teco/pre-entrega-1)
@@ -13,4 +13,4 @@ Al finalizar la carga de producto podrá optar por un tipo de factura. ( A o B )
 
 Se imprimirá en el navegador detalle de productos y factura. 
 
-Al finalizar podrá guardar el detalle generado.
+Al finalizar se guardará el detalle generado.
