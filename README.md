@@ -1,4 +1,4 @@
-# Desafío Complementario Nº 4 Javascript
+# Desafío Entregable Nº 3 Javascript
 ## Alumno: Juan Manuel Rodriguez Van Oyen
 
 Evolución del repositorio de Pre entrega Nº 1 (https://github.com/vanoyen-teco/pre-entrega-1)

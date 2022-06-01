@@ -125,7 +125,7 @@ function finalProductos(){
     buttonEnviar.onclick = validateFcType;
 }
 
-function printFactura(){
+function printFactura(reimpresion=false){
     let ivaDisc = (totalBill * 21)/100;
     if(factura == 'b'){
         let footer = document.querySelector("#tfoot-container");
@@ -155,6 +155,15 @@ function printFactura(){
     ocultar.forEach(function(element) {
         element.classList.remove('d-none');
     });
+    if(reimpresion){
+        Swal.fire({
+            title: 'Perfecto!',
+            text: 'Hemos recuperado tu factura',
+            icon: 'success',
+            timer: 2500,
+            timerProgressBar: true
+        })
+    }
 }
 
 function almacenarFactura(total, tabla){
@@ -166,7 +175,7 @@ function reimprimirFactura(datos){
     totalBill = datos.total;
     tableContent = datos.tabla;
     changeInnerHtml("tbody-container", tableContent);
-    printFactura();
+    printFactura(true);
 }
 
 function verificarStorageFactura(){
@@ -176,7 +185,10 @@ function verificarStorageFactura(){
         let bsOffcanvasReimpresion = new bootstrap.Offcanvas(myOffcanvasReimpresion);
 
         bsOffcanvasReimpresion.show();
-        document.getElementById('btnReimprimirFc').onclick = () => { reimprimirFactura(datos); bsOffcanvasReimpresion.hide() };
+        document.getElementById('btnReimprimirFc').onclick = () => { 
+            reimprimirFactura(datos);
+            bsOffcanvasReimpresion.hide();
+        };
         document.getElementById('btnNoReimprimirFc').onclick = () => { bsOffcanvasReimpresion.hide() };
     }
 }
